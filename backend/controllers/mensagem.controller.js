@@ -10,6 +10,8 @@ export const getMensagens = async (req, res) => {
             participantes: { $all: [emissorId, conversaComReceptorId] },
         }).populate("mensagens");
 
+        if(!conversa) return res.status(200).json([]);
+
         res.status(200).json(conversa.mensagens);
 
     } catch (err) {

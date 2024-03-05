@@ -9,7 +9,6 @@ const useSignup = () => {
     const signup = async ({ nomeCompleto, nomeDeUsuario, senha, confirmarSenha, genero }) => {
         const success = handleInputErrors({ nomeCompleto, nomeDeUsuario, senha, confirmarSenha, genero });
         if (!success) return;
-
         setLoading(true);
         try {
             const res = await fetch("/api/auth/signup", {
@@ -39,17 +38,17 @@ export default useSignup;
 
 function handleInputErrors({ nomeCompleto, nomeDeUsuario, senha, confirmarSenha, genero }) {
     if (!nomeCompleto || !nomeDeUsuario || !senha || !confirmarSenha || !genero) {
-        toast.error("Please fill in all fields");
+        toast.error("Por favor preencha todos os campos.");
         return false;
     }
 
     if (senha !== confirmarSenha) {
-        toast.error("Passwords do not match");
+        toast.error("Senhas incompatíveis.");
         return false;
     }
 
     if (senha.length < 6) {
-        toast.error("Password must be at least 6 characters");
+        toast.error("A senha deve possuir mais de 6 caracteres.");
         return false;
     }
 
