@@ -1,6 +1,8 @@
 import Conversa from "../models/conversa.model.js";
 import Mensagem from "../models/mensagem.model.js";
 
+import { getReceptorSocketId, io } from "../socket/socket.js";
+
 export const getMensagens = async (req, res) => {
     try {
         const { id: conversaComReceptorId } = req.params;
@@ -10,7 +12,7 @@ export const getMensagens = async (req, res) => {
             participantes: { $all: [emissorId, conversaComReceptorId] },
         }).populate("mensagens");
 
-        if(!conversa) return res.status(200).json([]);
+        if (!conversa) return res.status(200).json([]);
 
         res.status(200).json(conversa.mensagens);
 
@@ -33,21 +35,25 @@ export const enviarMensagem = async (req, res) => {
         if (!conversa) {
             conversa = await Conversa.create({
                 participantes: [emissorId, receptorId],
-            })
+            });
         }
 
         const novaMensagem = new Mensagem({
             emissorId,
             receptorId,
             mensagem
-        })
+        });
 
         if (novaMensagem) {
             conversa.mensagens.push(novaMensagem._id);
             await Promise.all([conversa.save(), novaMensagem.save()]);
         }
 
-        //FEATURE: SOCKET
+        const receptorSocketId = getReceptorSocketId(receptorId);
+
+        if (receptorSocketId) {
+            io.to(receptorSocketId).emit("novaMensagem", novaMensagem);
+        }
 
         res.status(201).json(novaMensagem);
 

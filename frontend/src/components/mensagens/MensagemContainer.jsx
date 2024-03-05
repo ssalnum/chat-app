@@ -3,8 +3,8 @@ import { TiMessages } from "react-icons/ti"
 import Mensagens from "./Mensagens";
 import MensagemInput from "./MensagemInput";
 
-import { useConversaContext } from "../../context/conversaContext"
-import { usuarioAuthContext } from "../../context/authContext"
+import { useConversaContext } from "../../context/ConversaContext"
+import { usuarioAuthContext } from "../../context/AuthContext"
 import { useEffect } from "react";
 
 const MensagemContainer = () => {

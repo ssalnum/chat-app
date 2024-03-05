@@ -1,15 +1,16 @@
-import { useConversaContext } from "../../context/conversaContext";
-import { usuarioAuthContext } from "../../context/authContext";
+import { useConversaContext } from "../../context/ConversaContext";
+import { usuarioAuthContext } from "../../context/AuthContext";
 import { formataTempo } from "../../utils/formataTempo.js"
 
 const Mensagem = ({ mensagem }) => {
 	const { authUsuario } = usuarioAuthContext();
 	const { conversaSelecionada } = useConversaContext();
-	const receptor = mensagem.receptorId === authUsuario._id;
+	const ehEmissor = mensagem.emissorId === authUsuario._id;
+
 	const tempoFormatado = formataTempo(mensagem.createdAt);
-	const chatClassName = receptor ? "chat-end" : "chat-start";
-	const imagemDePerfil = receptor ? authUsuario.imagemDePerfil : conversaSelecionada?.imagemDePerfil;
-	const bubbleBgCor = receptor ? "bg-blue-500" : "";
+	const chatClassName = ehEmissor ? "chat-end" : "chat-start";
+	const imagemDePerfil = ehEmissor ? authUsuario.imagemDePerfil : conversaSelecionada?.imagemDePerfil;
+	const bubbleBgCor = ehEmissor ? "bg-blue-500" : "";
 
 	const shakeClass = mensagem.shake ? "shake" : "";
 

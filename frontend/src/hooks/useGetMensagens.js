@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useConversaContext } from "../context/conversaContext"
+import { useConversaContext } from "../context/ConversaContext"
 import toast from "react-hot-toast";
 
 const useGetMensagens = () => {
@@ -23,7 +23,7 @@ const useGetMensagens = () => {
             }
         }
         if (conversaSelecionada?._id) getMensagens();
-    }, [conversaSelecionada?._id], setMensagens)
+    }, [conversaSelecionada?._id, setMensagens])
 
     return { loading, mensagens }
 }

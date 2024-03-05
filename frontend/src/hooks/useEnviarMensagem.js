@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useConversaContext } from "../context/conversaContext";
+import { useConversaContext } from "../context/ConversaContext";
 import toast from "react-hot-toast";
 
 const useEnviarMensagem = () => {
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(false);
     const { mensagens, setMensagens, conversaSelecionada } = useConversaContext();
 
     const enviarMensagem = async (mensagem) => {
@@ -14,10 +14,9 @@ const useEnviarMensagem = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ mensagem })
             })
-
-            const data = res.json();
-            if (data.error)
-                throw new Error(data.error);
+            
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
 
             setMensagens([...mensagens, data])
         } catch (err) {

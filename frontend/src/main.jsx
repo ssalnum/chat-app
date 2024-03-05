@@ -1,17 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
 import { BrowserRouter } from 'react-router-dom'
-import { AuthContextProvider } from './context/authContext.jsx'
-import { ConversaContextProvider } from './context/conversaContext.jsx'
+
+import './index.css'
+
+import { AuthContextProvider } from "./context/AuthContext.jsx";
+import { ConversaContextProvider } from './context/ConversaContext.jsx'
+import { SocketContextProvider } from './context/SocketContext.jsx'
+
+import App from './App.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <ConversaContextProvider>
-          <App />
+          <SocketContextProvider>
+            <App />
+          </SocketContextProvider>
         </ConversaContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
