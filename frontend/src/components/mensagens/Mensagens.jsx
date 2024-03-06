@@ -4,6 +4,7 @@ import useGetMensagens from "../../hooks/useGetMensagens";
 import useListenMensagens from "../../hooks/useListenMensagens"
 
 import Mensagem from "./Mensagem";
+import MensagemSkeleton from "../skeletons/MensagemSkeleton";
 
 const Mensagens = () => {
     const { loading, mensagens } = useGetMensagens();
@@ -28,7 +29,7 @@ const Mensagens = () => {
                     
                 )}
 
-            {/* {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)} */}
+            {loading && [...Array(3)].map((_, index) => <MensagemSkeleton key={index} />)}
             {!loading && mensagens.length === 0 && (
                 <p className='text-center'>Envie uma mensagem para iniciar uma conversa</p>
             )}
